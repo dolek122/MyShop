@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MyShop</title>
-    <link rel ="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-<header>
-    <span class="title">MyShop</span>
-    <div>
-        <span>Koszyk</span>
-        <span>(0)</span>
-        <span>0</span>
-        <span>zł</span>
-    </div>
-</header>
+<header th:replace="fragments/header :: ShopHeader"></header>
 
 <div class="main-content">
-    <div class="item">
-        <p class="item-name">
-            Laptop
-        </p>
-        <img src="https://gfx.senetic.com/i/gallery/91316572_9032439463.jpg" alt="">
+    <div class="item" th:each="item : ${items}">
+        <p class="item-name" th:text="${item.name}"></p>
+
+        <img th:src="@{${item.imgUrl}}">
+
         <div>
-            <span>Cena:</span>
-            <span>3000</span>
+            <span>Cena: </span>
+            <span th:text="${item.price}"> </span>
             <span>zł</span>
         </div>
-        <a href="" class="add-btn">Dodaj</a>
+
+        <a th:href="@{'/add/' + ${item.id}}" class="add-btn">Dodaj</a>
     </div>
+
 </div>
 </body>
 </html>
