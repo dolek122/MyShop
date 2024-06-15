@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/register", "/login").permitAll()
+                                .requestMatchers("/register", "/login", "/h2-console/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
@@ -41,7 +41,9 @@ public class SecurityConfig {
                 )
                 .logout(logout ->
                         logout.permitAll()
-                );
+                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
     }
